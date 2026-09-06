@@ -10,7 +10,7 @@ import 'package:flutter_riverpod_template/utils/app_log.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/app_snack_bar.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
-import 'package:flutter_riverpod_template/utils/languages/language_provider.dart';
+import 'package:flutter_riverpod_template/widgets/texts/languages/language_provider.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 import 'package:flutter_riverpod_template/widgets/buttons/app_button.dart';
 import 'package:flutter_riverpod_template/widgets/inputs/app_input_widget.dart';

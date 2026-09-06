@@ -1,13 +1,21 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"   xmlns:tools="http://schemas.android.com/tools">
 
 <!-- permission start  -->
  <uses-permission android:name="android.permission.INTERNET"/>
+ <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove"/>
+ <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" tools:node="remove"/>
 <!-- permission end  -->
    
     <application
         android:label="flutter_riverpod_template"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true"

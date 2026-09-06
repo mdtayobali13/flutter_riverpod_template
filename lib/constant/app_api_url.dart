@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod_template/utils/app_log.dart';
 
 class AppApiUrl {
@@ -7,22 +7,8 @@ class AppApiUrl {
   static AppApiUrl get instance => _instance;
   //////////////  app base api end point
 
-  static final String _baseUrlFromEnv = String.fromEnvironment(
-    'BASE_URL',
-    defaultValue: 'https://api.yourapp.com', // safe fallback for CI
-  );
-
-  static String _validateUrl(String url) {
-    // Block plain HTTP in release builds — HTTPS required in production
-    if (!kDebugMode && url.startsWith('http://')) {
-      errorLog('AppApiUrl', 'HTTP (non-TLS) base URL blocked in release build. Use HTTPS.');
-      assert(false, 'Production builds must use HTTPS. Got: $url');
-    }
-    return url;
-  }
-
-  static final String domain = _validateUrl(_baseUrlFromEnv);
-  static final String socket = _validateUrl(_baseUrlFromEnv);
+  static final String domain = _getDomain();
+  static final String socket = _getDomain();
   final String baseUrl = "$domain/api/v1";
 
   //////////////////////////////////  base
@@ -43,4 +29,14 @@ class AppApiUrl {
   String authForgotPassword = "/authForgotPassword";
   String authVerifyEmail = "/authVerifyEmail";
   String authResetPassword = "/authResetPassword";
+}
+
+String _getDomain({String baseKey = "BASE_URL"}) {
+  String baseUrl = "https://api.yourapp.com";
+  try {
+    return dotenv.env[baseKey] ?? baseUrl;
+  } catch (e) {
+    errorLog("_getDomain", e);
+  }
+  return baseUrl;
 }

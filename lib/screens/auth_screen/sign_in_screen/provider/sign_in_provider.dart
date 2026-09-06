@@ -1,14 +1,13 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_riverpod_template/utils/app_log.dart';
 
 final signInProvider = StateNotifierProvider<_SignInProvider, bool>((ref) {
-  return _SignInProvider(ref);
+  return _SignInProvider();
 });
 
 class _SignInProvider extends StateNotifier<bool> {
-  _SignInProvider(this._ref) : super(false);
-  final Ref _ref;
+  _SignInProvider() : super(false);
+  // final Ref _ref;
 
   Future signIn(String email, String password) async {
     try {

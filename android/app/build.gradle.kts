@@ -1,10 +1,11 @@
 import java.util.Properties
 import java.io.FileInputStream
+import com.android.build.api.dsl.ApplicationExtension
+import org.gradle.kotlin.dsl.configure
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    // The Flutter Gradle Plugin must be applied after the Android plugin.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -14,9 +15,9 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
-android {
-    namespace = "com.example.flutter_riverpod_templete"
-    compileSdk = 36
+extensions.configure<ApplicationExtension> {
+    namespace = "com.example.flutter_riverpod_template"
+    compileSdk = 37
     ndkVersion = "29.0.14033849"
     buildToolsVersion = "36.0.0"
 
@@ -26,13 +27,9 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.flutter_riverpod_templete"
+        applicationId = "com.example.flutter_riverpod_template"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -68,7 +65,7 @@ android {
         signingConfig = signingConfigs.getByName("debug")
         isMinifyEnabled = true
         isShrinkResources = true
-        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), rootProject.file("proguard-rules.pro"))
         ndk {
          abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86_64"))
          debugSymbolLevel = "FULL"
@@ -78,7 +75,7 @@ android {
         signingConfig = signingConfigs.getByName("release")
         isMinifyEnabled = true
         isShrinkResources = true
-        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), rootProject.file("proguard-rules.pro"))
         ndk {
          abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86_64"))
          debugSymbolLevel = "FULL"
@@ -93,4 +90,10 @@ dependencies {
 
 flutter {
     source = "../.."
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
 }

@@ -13,7 +13,7 @@ class StorageServices {
   ////////////// storage initial
   // Secure storage (Keychain / Keystore)
   static const _secure = FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true, resetOnError: true),
+    aOptions: AndroidOptions(resetOnError: true),
     iOptions: IOSOptions(accessibility: KeychainAccessibility.unlocked_this_device),
   );
 

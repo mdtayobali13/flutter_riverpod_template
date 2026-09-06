@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/main_app_entry.dart';
+import 'package:flutter_riverpod_template/utils/app_log.dart';
 
 Future<void> main() async {
   //////////////  flutter binding initialize
@@ -22,7 +25,14 @@ Future<void> main() async {
     ),
   );
   ////////////// network
-  ////// HttpOverrides.global = MyHttpOverrides(); //// use when i work local with http
+  HttpOverrides.global = MyHttpOverrides(); //// use when i work local with http
+
+  ////////////// .env file load
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    errorLog("dotenv file load", e);
+  }
 
   runApp(const MainAppEntry());
 }
@@ -30,6 +40,6 @@ Future<void> main() async {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)..badCertificateCallback = (cert, host, port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (cert, host, port) => kDebugMode;
   }
 }
